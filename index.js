@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const mysql = require('mysql')
+const cookieParser = require('cookie-parser')
 const dotenv = require('dotenv')
 dotenv.config({ path: './.env' })
 const app = express()
@@ -13,6 +14,7 @@ const db = mysql.createConnection({
     database: process.env.DATABASE
 })
 
+app.use(cookieParser())
 app.use(express.static(path.join(__dirname, './public')))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
@@ -23,6 +25,11 @@ db.connect(err => {
     err
         ? console.log(err)
         : console.log('Connected')
+})
+
+app.use(function (req, res, next) {
+    console.log(req.cookies)
+    next()
 })
 
 app.use('/', require('./routes/pages'))

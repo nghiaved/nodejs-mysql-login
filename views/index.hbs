@@ -35,7 +35,11 @@
                                 <a href="/register" class="text-info">Đăng kí tại đây</a>
                                 <div class="my-2 text-danger">{{message}}</div>
                                 <div class="my-2 text-success">{{success}}</div>
-                                <div id="token" class="my-2 text-warning">Token: {{token}}</div>
+                                {{#if token}}
+                                <a href="/auth/logout">
+                                    <div id="token" class="my-2 text-warning">Token: {{token}}</div>
+                                </a>
+                                {{/if}}
                             </div>
                         </form>
                     </div>

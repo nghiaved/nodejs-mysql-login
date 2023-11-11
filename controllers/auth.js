@@ -50,6 +50,7 @@ exports.login = (req, res) => {
                     const userInfo = results[0]
                     delete userInfo.password
                     let token = jwt.sign({ ...userInfo }, 'secretKey', { expiresIn: '1d' })
+                    res.cookie('token', token)
                     return res.render('index', { success: `User logined`, token })
                 } else {
                     return res.render('index', { message: `Password incorrect` })
@@ -59,4 +60,9 @@ exports.login = (req, res) => {
             }
         }
     )
+}
+
+exports.logout = (req, res) => {
+    res.clearCookie('token')
+    return res.render('index', { success: `User logouted` })
 }
